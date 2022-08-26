@@ -1,15 +1,21 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
+import { GlobalContextProvider } from './contexts/globalContext'
+import { PartyContextProvider } from './contexts/PartyContext'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+import './assets/index.css'
 
-root.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <GlobalContextProvider>
+      <PartyContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PartyContextProvider>
+    </GlobalContextProvider>
   </React.StrictMode>
 )
