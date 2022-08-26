@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState('')
   const [lead, setLead] = useState(0)
   const [subLead, setSubLead] = useState(-1)
 
@@ -16,7 +16,7 @@ const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
       } else if (player.id === subLead) {
         round[player.id] = score / 2
       } else {
-        round[player.id] = score * -1
+        round[player.id] = (score / 2) * -1
       }
     })
 
@@ -52,7 +52,7 @@ const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
             </option>
           ))}
         </select>
-        {score !== 0 && (
+        {score !== '' && (
           <select
             className='rounded-lg py-2 px-4'
             value={subLead}
