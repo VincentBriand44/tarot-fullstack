@@ -1,0 +1,17 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "02: Frontend",
+  "steps": [
+    {
+      "file": "frontend/src/App.jsx",
+      "description": "From your App.jsx file you'll be able to build your application. Consider you're already in the `<body>` tag of your HTML page and code on !",
+      "line": 5
+    },
+    {
+      "file": "frontend/src/App.jsx",
+      "description": "On this very first line, you see the import of another component: Home (you may delete it if you don't need it, it's just a sample!)\n\nTwo things to note here:\n- this import gets the `Home.jsx` file situated in the `routes` folder (no need to add the \".jsx\" extension in your imports)\n- the `@routes` notation is a shortcut pre-configured by your trainers: wherever you are in your frontend file architecture, it will lead to the `frontend/src/routes` folder. You don't need to know how it was done for now, but there are other shortcuts as this one:\n  - `@assets`\n  - `@components`\n  - `@routes`\n  - `@layouts`\n",
+      "line": 1
+    }
+  ],
+  "ref": "master"
+}
