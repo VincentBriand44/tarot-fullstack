@@ -15,7 +15,6 @@ const CalendarEvent = ({ event, index, handleDelete }) => {
         </h3>
         <p>le {event.date}</p>
       </div>
-      {/* Ajouter la suppresion */}
       <Trash2
         className='text-red-600 hover:text-red-400'
         size='18'

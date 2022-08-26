@@ -5,22 +5,22 @@ const GlobalContext = createContext()
 const GlobalContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(true)
   const [players, setPlayers] = useState([
-    { id: 0, name: 'Christian' },
-    { id: 1, name: 'Didier' },
-    { id: 2, name: 'Kiki' },
-    { id: 3, name: 'Maxime' },
-    { id: 4, name: 'Stephane' },
-    { id: 5, name: 'Vincent' }
+    { id: 1, name: 'Christian' },
+    { id: 2, name: 'Didier' },
+    { id: 3, name: 'Kiki' },
+    { id: 4, name: 'Maxime' },
+    { id: 5, name: 'Stephane' },
+    { id: 6, name: 'Vincent' }
   ])
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <GlobalContext.Provider
       value={{
-        players,
-        setPlayers,
         loggedIn,
-        setLoggedIn
+        setLoggedIn,
+        players,
+        setPlayers
       }}
     >
       {children}

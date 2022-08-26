@@ -5,21 +5,8 @@ const PartyContext = createContext()
 export function PartyContextProvider({ children }) {
   const [partyIn, setPartyIn] = useState(true)
   const [dealer, setDealer] = useState()
-  const [rounds, setRounds] = useState([
-    [0, 0, 0, 10, 0],
-    [0, 0, 0, 10, 0],
-    [0, 0, 0, 10, 0],
-    [0, 0, 0, 10, 0],
-    [0, 0, 0, 10, 0],
-    [0, 0, 0, 10, 0]
-  ])
-  const [players] = useState([
-    { id: 0, name: 'Christian' },
-    { id: 1, name: 'Didier' },
-    { id: 2, name: 'Kiki' },
-    { id: 3, name: 'Maxime' },
-    { id: 4, name: 'Stephane' }
-  ])
+  const [rounds, setRounds] = useState([])
+  const [partyPlayers, setPartyPlayers] = useState([])
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -31,7 +18,8 @@ export function PartyContextProvider({ children }) {
         setDealer,
         rounds,
         setRounds,
-        players
+        partyPlayers,
+        setPartyPlayers
       }}
     >
       {children}

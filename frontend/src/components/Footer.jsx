@@ -1,11 +1,12 @@
-import { Calendar, Home, Users } from 'react-feather'
+import { Calendar, Clock, Home, Users } from 'react-feather'
 import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
   const routes = [
     { name: 'Accueil', path: '/', icon: <Home size='16' /> },
     { name: 'Joueurs', path: '/players', icon: <Users size='16' /> },
-    { name: 'Calendrier', path: '/calendar', icon: <Calendar size='16' /> }
+    { name: 'Calendrier', path: '/calendar', icon: <Calendar size='16' /> },
+    { name: 'Historique', path: '/history', icon: <Clock size='16' /> }
   ]
   return (
     <div className='w-full flex justify-around h-16 bg-slate-800 items-center text-slate-400 font-semibold select-none fixed bottom-0'>

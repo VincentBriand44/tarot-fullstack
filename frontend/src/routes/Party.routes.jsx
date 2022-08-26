@@ -1,33 +1,37 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import PartyForm from '../components/PartyForm'
-import PartyTable from '../components/PartyTable'
-import PartyContext from '../contexts/PartyContext'
+
+import PartyContext from '@contexts/PartyContext'
+
+import PartyForm from '@components/PartyForm'
+import PartySetupDealer from '@components/PartySetupDealer'
+import PartySetupPlayers from '@components/PartySetupPlayers'
+import PartyTable from '@components/PartyTable'
 
 const Party = () => {
-  const { partyIn, setPartyIn, dealer, setDealer, rounds, setRounds, players } =
-    useContext(PartyContext)
+  const {
+    partyIn,
+    setPartyIn,
+    dealer,
+    setDealer,
+    rounds,
+    setRounds,
+    partyPlayers,
+    setPartyPlayers
+  } = useContext(PartyContext)
 
-  return dealer === undefined ? (
-    <>
-      <p className='text-white text-lg mb-4 sm:text-3xl'>
-        Qui commence à distribuer ?
-      </p>
-      {players.map((player, index) => (
-        <button
-          key={player.id}
-          className='px-4 py-2 bg-slate-800 w-64 text-center rounded-xl m-auto text-slate-200 font-bold hover:text-green-600'
-          onClick={() => setDealer(index)}
-        >
-          {player.name}
-        </button>
-      ))}
-    </>
+  return partyPlayers.length !== 5 ? (
+    <PartySetupPlayers
+      partyPlayers={partyPlayers}
+      setPartyPlayers={setPartyPlayers}
+    />
+  ) : !dealer ? (
+    <PartySetupDealer partyPlayers={partyPlayers} setDealer={setDealer} />
   ) : partyIn ? (
     <div className='flex flex-col items-center w-full'>
-      <PartyTable rounds={rounds} players={players} dealer={dealer} />
+      <PartyTable rounds={rounds} partyPlayers={partyPlayers} dealer={dealer} />
       <PartyForm
-        players={players}
+        partyPlayers={partyPlayers}
         rounds={rounds}
         setRounds={setRounds}
         dealer={dealer}
