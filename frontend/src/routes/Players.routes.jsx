@@ -1,12 +1,22 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Trash2 } from 'react-feather'
 import GlobalContext from '../contexts/globalContext'
 
 const Players = () => {
   const { players, setPlayers } = useContext(GlobalContext)
+  const [input, setInput] = useState('')
 
   const handleDelete = i => {
     setPlayers(players.filter(e => e.id !== i))
+  }
+
+  const addPlayer = () => {
+    input.length >= 3
+      ? setPlayers([
+          ...players,
+          { id: players[players.length - 1].id + 1, name: input }
+        ])
+      : alert('Le nom du joueur doit contenir au moins 3 caractères')
   }
 
   return (
@@ -28,11 +38,20 @@ const Players = () => {
             />
           </div>
         ))}
+        <div className='w-full flex gap-2'>
+          <input
+            className='rounded-lg py-2 px-4 w-1/2'
+            value={input}
+            onChange={e => setInput(e.target.value)}
+          />
+          <button
+            className='px-4 py-2 bg-slate-800 w-1/2 text-center rounded-xl m-auto text-slate-200 font-bold hover:text-green-600'
+            onClick={() => addPlayer()}
+          >
+            Ajouter un joueur
+          </button>
+        </div>
       </div>
-      <button className='px-4 py-2 bg-slate-800 w-64 text-center rounded-xl m-auto text-slate-200 font-bold hover:text-green-600'>
-        {' '}
-        Ajouter un joueur
-      </button>
     </>
   )
 }

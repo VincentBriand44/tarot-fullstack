@@ -4,6 +4,7 @@ const GlobalContext = createContext()
 
 const GlobalContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(true)
+  const [partyAll, setPartyAll] = useState([])
   const [players, setPlayers] = useState([
     { id: 1, name: 'Christian' },
     { id: 2, name: 'Didier' },
@@ -20,7 +21,9 @@ const GlobalContextProvider = ({ children }) => {
         loggedIn,
         setLoggedIn,
         players,
-        setPlayers
+        setPlayers,
+        partyAll,
+        setPartyAll
       }}
     >
       {children}

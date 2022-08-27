@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
-const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
+import PartyContext from '@contexts/PartyContext'
+
+const PartyForm = () => {
+  const { dealer, setDealer, rounds, setRounds, partyPlayers } =
+    useContext(PartyContext)
+
   const [score, setScore] = useState('')
-  const [lead, setLead] = useState(0)
+  const [lead, setLead] = useState(partyPlayers[0].id)
   const [subLead, setSubLead] = useState(-1)
 
   const handleSubmit = e => {
@@ -11,7 +16,9 @@ const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
     const round = []
 
     partyPlayers.forEach(player => {
-      if (player.id === lead) {
+      if (player.id === lead && subLead === -1) {
+        round[player.id] = score * 2
+      } else if (player.id === lead) {
         round[player.id] = score
       } else if (player.id === subLead) {
         round[player.id] = score / 2
@@ -22,9 +29,9 @@ const PartyForm = ({ partyPlayers, rounds, setRounds, dealer, setDealer }) => {
 
     const newRounds = [...rounds, round]
     setRounds(newRounds)
-    setLead(0)
+    setLead(partyPlayers[0].id)
     setSubLead(-1)
-    setScore(0)
+    setScore('')
     setDealer(
       dealer !== partyPlayers[4].id
         ? partyPlayers.find(player => player.id === dealer + 1).id

@@ -1,4 +1,10 @@
-const PartySetupDealer = ({ partyPlayers, setDealer }) => {
+import { useContext } from 'react'
+
+import PartyContext from '@contexts/PartyContext'
+
+const PartySetupDealer = () => {
+  const { setDealer, partyPlayers } = useContext(PartyContext)
+
   return (
     <>
       <p className='text-white text-lg mb-4 sm:text-3xl'>
