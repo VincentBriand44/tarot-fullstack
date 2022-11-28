@@ -1,7 +1,6 @@
 ## Concept
 
-This template is a fork of the Wild Code School one, it has been modified to fit my needs.
-Link to the original template: https://github.com/WildCodeSchool/js-template-fullstack
+Manage Tarot games, with a scoring and ranking system.
 
 ## Setup & Use
 

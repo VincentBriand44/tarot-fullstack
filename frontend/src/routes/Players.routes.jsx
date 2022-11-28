@@ -1,5 +1,7 @@
+import axios from 'axios'
 import { useContext, useState } from 'react'
 import { Trash2 } from 'react-feather'
+
 import GlobalContext from '../contexts/globalContext'
 
 const Players = () => {
@@ -7,16 +9,19 @@ const Players = () => {
   const [input, setInput] = useState('')
 
   const handleDelete = i => {
-    setPlayers(players.filter(e => e.id !== i))
+    players.length > 1 &&
+      axios
+        .delete(import.meta.env.VITE_BACKEND_URL + '/players/' + i)
+        .then(() => setPlayers(players.filter(player => player.id !== i)))
   }
 
   const addPlayer = () => {
-    input.length >= 3
-      ? setPlayers([
-          ...players,
-          { id: players[players.length - 1].id + 1, name: input }
-        ])
-      : alert('Le nom du joueur doit contenir au moins 3 caractères')
+    if (input.length >= 3) {
+      axios
+        .post(import.meta.env.VITE_BACKEND_URL + '/players', { name: input })
+        .then(res => res.status === 201 && setPlayers([]))
+        .catch(err => console.error(err))
+    } else alert('Le nom du joueur doit contenir au moins 3 caractères')
   }
 
   return (
@@ -28,11 +33,11 @@ const Players = () => {
             key={player.id}
             className='flex justify-between items-center mb-2 gap-2'
           >
-            <p className='text-slate-200 font-semibold bg-slate-800 py-2 rounded-lg w-full text-center'>
+            <p className='text-slate-200 font-semibold bg-slate-800 py-2 rounded-lg w-full text-center capitalize'>
               {player.name}
             </p>
             <Trash2
-              className='text-red-600 hover:text-red-400'
+              className='text-red-600 hover:text-red-400 cursor-pointer'
               size='18'
               onClick={() => handleDelete(player.id)}
             />

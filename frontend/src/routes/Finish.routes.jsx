@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useContext, useEffect } from 'react'
 
 import GlobalContext from '@contexts/globalContext'
@@ -5,7 +6,7 @@ import PartyContext from '@contexts/PartyContext'
 
 const Finish = () => {
   const { rounds, partyPlayers } = useContext(PartyContext)
-  const { partyAll, setPartyAll } = useContext(GlobalContext)
+  const { parties, setParties } = useContext(GlobalContext)
   const total = [0, 0, 0, 0, 0]
 
   rounds.map(round =>
@@ -13,7 +14,11 @@ const Finish = () => {
   )
 
   const finishParty = () => {
-    rounds.length !== 0 && setPartyAll([...partyAll, total])
+    axios
+      .delete(import.meta.env.VITE_BACKEND_URL + '/party/players')
+      .then(res => res.status === 204)
+      .catch(err => console.error(err))
+    rounds.length !== 0 && setParties([...parties, total])
   }
 
   useEffect(() => {

@@ -1,18 +1,19 @@
-import { createContext, useState } from 'react'
+import axios from 'axios'
+import { createContext, useEffect, useState } from 'react'
 
 const GlobalContext = createContext()
 
 const GlobalContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(true)
-  const [partyAll, setPartyAll] = useState([])
-  const [players, setPlayers] = useState([
-    { id: 1, name: 'Christian' },
-    { id: 2, name: 'Didier' },
-    { id: 3, name: 'Kiki' },
-    { id: 4, name: 'Maxime' },
-    { id: 5, name: 'Stephane' },
-    { id: 6, name: 'Vincent' }
-  ])
+  const [parties, setParties] = useState([])
+  const [players, setPlayers] = useState([])
+
+  useEffect(() => {
+    players.length === 0 &&
+      axios
+        .get(import.meta.env.VITE_BACKEND_URL + '/players')
+        .then(res => setPlayers(res.data))
+  }, [players])
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -22,8 +23,8 @@ const GlobalContextProvider = ({ children }) => {
         setLoggedIn,
         players,
         setPlayers,
-        partyAll,
-        setPartyAll
+        parties,
+        setParties
       }}
     >
       {children}

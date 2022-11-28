@@ -17,6 +17,10 @@ class AbstractManager {
     return this.connection.query(`delete from ${this.table} where id = ?`, [id])
   }
 
+  deleteAll() {
+    return this.connection.query(`delete from ${this.table}`)
+  }
+
   setConnection(connection) {
     this.connection = connection
   }

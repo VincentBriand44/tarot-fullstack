@@ -1,7 +1,6 @@
 ## Concept
 
-Ce template est un fork de celui de Wild Code School, il a été modifier afin de correspondre à mes besoins.
-Lien du template original: https://github.com/WildCodeSchool/js-template-fullstack
+Gérer les parties de Tarot, avec un système de points et de classement.
 
 ## Installation & Utilisation
 
