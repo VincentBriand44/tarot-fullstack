@@ -32,5 +32,3 @@ Manage Tarot games, with a scoring and ranking system.
 - _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
 - _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
 - _Nodemon_ : Allows to restart the server everytime a .js file is udated
-
-Test connect to github
