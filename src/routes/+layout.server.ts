@@ -10,12 +10,6 @@ export const load = () => {
 				href: '/',
 				icon: undefined,
 				active: true
-			},
-			{
-				name: 'About',
-				href: '/about',
-				icon: undefined,
-				active: false
 			}
 		] as Nav[]
 	};
