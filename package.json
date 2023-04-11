@@ -43,7 +43,8 @@
       "skipQuestions": [
         "scope",
         "issues",
-        "body"
+        "body",
+        "breaking"
       ]
     }
   }

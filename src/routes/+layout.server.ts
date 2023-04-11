@@ -1,7 +1,5 @@
 import type { Nav } from '$types/app';
 
-// import home from '$img/icons/activity.svg';
-
 export const load = () => {
 	return {
 		nav: [
