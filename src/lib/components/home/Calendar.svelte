@@ -4,7 +4,7 @@
 	export let calendar: Calendar[];
 </script>
 
-<section class="flex flex-col items-center justify-between w-64 p-4 rounded-xl bg-slate-900">
+<section class="flex flex-col items-center justify-between w-64 p-4 rounded-xl bg-slate-900 module">
 	<h2 class="mb-2 text-lg font-bold">Calendrier</h2>
 	<ul>
 		{#each calendar as { date }}
