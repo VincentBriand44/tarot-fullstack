@@ -6,7 +6,7 @@
 	export let nav: Nav[];
 </script>
 
-<nav class="fixed bottom-0 flex items-center justify-center w-full h-20 gap-4">
+<nav class="fixed bottom-0 flex items-center justify-center w-full h-20 gap-4 mb-2">
 	<ul class="flex gap-4">
 		{#each nav as { name, href, icon, active }}
 			<li>
