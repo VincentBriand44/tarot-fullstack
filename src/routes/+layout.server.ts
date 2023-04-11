@@ -6,10 +6,26 @@ export const load = () => {
 	return {
 		nav: [
 			{
-				name: 'Home',
+				name: 'Accueil',
+				href: '/',
+				icon: 'mi-home',
+				active: true
+			},
+
+			{
+				name: 'Parties',
+				href: '/',
+				icon: 'mi-flag',
+				active: false
+			}
+		] as Nav[],
+
+		accountDropdown: [
+			{
+				name: 'Mon compte',
 				href: '/',
 				icon: undefined,
-				active: true
+				active: false
 			}
 		] as Nav[]
 	};
