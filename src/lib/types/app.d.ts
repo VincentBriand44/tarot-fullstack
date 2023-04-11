@@ -4,3 +4,8 @@ export interface Nav {
 	icon: string | undefined;
 	active: boolean;
 }
+
+export interface Player {
+	name: string;
+	score: number;
+}
