@@ -9,7 +9,7 @@
 </script>
 
 <main class="min-h-screen">
-	<Header />
+	<Header accountDropdown={data.accountDropdown} />
 	<slot />
 	<Navbar nav={data.nav} />
 </main>

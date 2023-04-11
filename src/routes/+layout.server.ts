@@ -20,7 +20,19 @@ export const load = () => {
 		accountDropdown: [
 			{
 				name: 'Mon compte',
-				href: '/',
+				href: '/account',
+				icon: undefined,
+				active: false
+			},
+			{
+				name: 'Mes paramètres',
+				href: '/settings',
+				icon: undefined,
+				active: false
+			},
+			{
+				name: 'Se déconnecter',
+				href: '/logout',
 				icon: undefined,
 				active: false
 			}
