@@ -42,7 +42,6 @@
     "cz-emoji": {
       "skipQuestions": [
         "scope",
-        "issues",
         "body",
         "breaking"
       ]
