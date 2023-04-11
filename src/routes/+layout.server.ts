@@ -9,10 +9,9 @@ export const load = () => {
 				icon: 'mi-home',
 				active: true
 			},
-
 			{
 				name: 'Parties',
-				href: '/',
+				href: 'games',
 				icon: 'mi-flag',
 				active: false
 			}
