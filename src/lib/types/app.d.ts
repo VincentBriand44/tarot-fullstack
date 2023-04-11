@@ -9,3 +9,7 @@ export interface Player {
 	name: string;
 	score: number;
 }
+
+export interface Calendar {
+	date: string;
+}
