@@ -5,11 +5,25 @@ export interface Nav {
 	active: boolean;
 }
 
-export interface Player {
+export interface User {
 	name: string;
-	score: number;
+	scoreSeason: number;
 }
 
 export interface Calendar {
 	date: string;
+}
+
+export interface Game {
+	start: string;
+	end: string | undefined;
+	players: User[];
+	rounds: {
+		dealer: User;
+		dealerLoose: boolean;
+		scores: {
+			user: User;
+			value: number;
+		}[];
+	}[];
 }

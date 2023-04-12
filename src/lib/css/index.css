@@ -28,7 +28,7 @@
   }
 
   .module {
-    max-height: calc(100vh - 12rem);
+    height: calc(100vh - 12rem);
     @apply overflow-y-scroll;
   }
 
