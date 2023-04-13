@@ -9,9 +9,18 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin-search-dir . --write .",
+    "compose:up": "docker compose up -d",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:dev": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "pm2:prod": "pm2 start ecosystem.config.json --env production",
+    "pm2:logs": "pm2 logs --lines 100 tarot",
+    "pm2:monit": "pm2 monit",
+    "prod": "yarn run compose:up && wait-on tcp:5432 && yarn run prisma:deploy && yarn run build && yarn run pm2:prod"
   },
   "devDependencies": {
+    "@faker-js/faker": "7.6.0",
     "@sveltejs/adapter-node": "1.2.3",
     "@sveltejs/kit": "1.15.5",
     "@types/node": "18.15.11",
@@ -24,6 +33,7 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-svelte3": "4.0.0",
+    "pm2-config": "0.0.8",
     "postcss": "8.4.21",
     "prettier": "2.8.7",
     "prettier-plugin-svelte": "2.10.0",
@@ -47,5 +57,9 @@
         "breaking"
       ]
     }
+  },
+  "dependencies": {
+    "@prisma/client": "4.12.0",
+    "wait-on": "^7.0.1"
   }
 }

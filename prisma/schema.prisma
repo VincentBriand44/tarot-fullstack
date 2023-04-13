@@ -9,3 +9,92 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String @id @default(cuid())
+  username String @unique
+  password String
+  name     String @unique
+  email    String @unique
+  role     Role   @default(USER)
+
+  calendars Calendar[]
+
+  games  Game[]
+  rounds Round[]
+  scores Score[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Season {
+  id String @id @default(cuid())
+
+  games Game[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Game {
+  id    String  @id @default(cuid())
+  ended Boolean @default(false)
+
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId String
+
+  users  User[]
+  rounds Round[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Round {
+  id      String  @id @default(cuid())
+  misdeal Boolean @default(false)
+  card    Int
+
+  dealer   User   @relation(fields: [dealerId], references: [id])
+  dealerId String
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  auction   Auction @relation(fields: [auctionId], references: [id])
+  auctionId String
+
+  scores Score[]
+}
+
+model Auction {
+  id    String @id @default(cuid())
+  name  String
+  value Int
+
+  Round Round[]
+}
+
+model Score {
+  id    String @id @default(cuid())
+  value Int
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  round   Round  @relation(fields: [roundId], references: [id])
+  roundId String
+}
+
+model Calendar {
+  id   String   @id @default(cuid())
+  date DateTime
+
+  users User[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
