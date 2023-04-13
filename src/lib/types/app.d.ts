@@ -6,6 +6,7 @@ export interface Nav {
 }
 
 export interface User {
+	id: number;
 	name: string;
 	scoreSeason: number;
 }
@@ -15,10 +16,12 @@ export interface Calendar {
 }
 
 export interface Game {
+	id: number;
 	start: string;
 	end: string | undefined;
 	players: User[];
 	rounds: {
+		id: number;
 		dealer: User;
 		dealerLoose: boolean;
 		scores: {
