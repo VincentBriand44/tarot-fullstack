@@ -33,7 +33,7 @@
 	const players = calcScore();
 </script>
 
-<section class="flex flex-col w-64 p-4 pb-6 rounded-xl bg-slate-900 module">
+<section class="flex flex-col w-64 p-4 pb-6 rounded-xl bg-slate-900 module relative">
 	<h2 class="mb-2 text-lg font-bold text-center">Dernière partie</h2>
 	<ul class="w-full">
 		{#each players as { name, score }}
@@ -42,4 +42,9 @@
 			</li>
 		{/each}
 	</ul>
+	<a
+		href="/games"
+		class="w-4/5 self-center bottom-4 px-2 py-1 mt-4 text-center rounded-lg bg-slate-800 absolute"
+		>Voir plus de détails</a
+	>
 </section>
