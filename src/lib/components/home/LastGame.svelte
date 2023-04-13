@@ -14,7 +14,6 @@
 		game?.rounds.map((round) => {
 			round.scores.map((score) => {
 				arr.push({ name: score.user.name, score: score.value });
-				console.log(arr);
 			});
 		});
 
