@@ -1,18 +1,22 @@
 import { prisma } from '$lib/prisma';
 
 export const load = async () => {
-	const users = await prisma.user.findMany({});
 	const seasons = await prisma.season.findMany({
 		include: {
 			games: {
 				include: {
-					users: {
-						select: {
+					rounds: {
+						include: {
 							scores: {
 								select: {
 									value: true
 								}
 							}
+						}
+					},
+					users: {
+						select: {
+							name: true
 						}
 					}
 				}
@@ -21,7 +25,6 @@ export const load = async () => {
 	});
 
 	return {
-		users,
 		seasons
 	};
 };

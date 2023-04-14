@@ -1,5 +1,10 @@
 <script>
 	import Icon from '$components/Icon.svelte';
+
+	export let data;
+	const { seasons } = data; // TODO: use this
+
+	let played = true;
 </script>
 
 <div class="flex flex-col items-center">
@@ -12,20 +17,24 @@
 	<section class="flex justify-center gap-4 mt-8 w-full max-w-5xl">
 		<div class="bg-slate-900 rounded-xl px-4 py-2 w-full">
 			<h4 class="font-bold text-center">Saison actuelle</h4>
-			<ul>
-				<li class="flex justify-between">
-					Points
-					<span class="text-slate-400">0</span>
-				</li>
-				<li class="flex justify-between">
-					Classement
-					<span class="text-slate-400">0</span>
-				</li>
-				<li class="flex justify-between">
-					Parties jouées
-					<span class="text-slate-400">0</span>
-				</li>
-			</ul>
+			{#if played}
+				<ul>
+					<li class="flex justify-between">
+						Points
+						<span class="text-slate-400">0</span>
+					</li>
+					<li class="flex justify-between">
+						Classement
+						<span class="text-slate-400">0</span>
+					</li>
+					<li class="flex justify-between">
+						Parties jouées
+						<span class="text-slate-400">0</span>
+					</li>
+				</ul>
+			{:else}
+				<p class="text-center">Aucune partie jouée</p>
+			{/if}
 		</div>
 		<div class="bg-slate-900 rounded-xl px-4 py-2 w-full">
 			<h4 class="font-bold text-center">Médailles</h4>
