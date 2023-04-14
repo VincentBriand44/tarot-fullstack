@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { faker } from '@faker-js/faker';
 import { PrismaClient, Role } from '@prisma/client';
 
@@ -29,13 +30,25 @@ const main = async () => {
 			})
 	);
 	const games = await Promise.all(
-		Array(2)
+		Array(5)
 			.fill(undefined)
 			.map(() => {
 				return prisma.game.create({
 					data: {
 						ended: faker.datatype.boolean(),
-						season: { connect: { id: seasons[Math.ceil(Math.random() * seasons.length)].id } }
+						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } }
+					}
+				});
+			})
+	);
+	const auctions = await Promise.all(
+		Array(4)
+			.fill(undefined)
+			.map(() => {
+				return prisma.auction.create({
+					data: {
+						name: faker.music.genre(),
+						value: Math.floor(Math.random() * 3) * 50
 					}
 				});
 			})
@@ -48,21 +61,9 @@ const main = async () => {
 					data: {
 						misdeal: faker.datatype.boolean(),
 						card: Math.ceil(Math.random() * 4),
-						dealer: { connect: { id: users[Math.ceil(Math.random() * users.length)].id } },
-						game: { connect: { id: games[Math.ceil(Math.random() * games.length)].id } },
-						auction: { connect: { id: auctions[Math.ceil(Math.random() * auctions.length)].id } }
-					}
-				});
-			})
-	);
-	const auctions = await Promise.all(
-		Array(4)
-			.fill(undefined)
-			.map(() => {
-				return prisma.auction.create({
-					data: {
-						name: faker.music.genre(),
-						value: Math.ceil(Math.random() * 3) * 50
+						dealer: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
+						game: { connect: { id: games[Math.floor(Math.random() * games.length)].id } },
+						auction: { connect: { id: auctions[Math.floor(Math.random() * auctions.length)].id } }
 					}
 				});
 			})
@@ -74,12 +75,13 @@ const main = async () => {
 				return prisma.score.create({
 					data: {
 						value: Math.floor(Math.random() * 10) * 5,
-						user: { connect: { id: users[Math.ceil(Math.random() * users.length)].id } },
-						round: { connect: { id: users[Math.floor(i / 5)].id } }
+						user: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
+						round: { connect: { id: rounds[Math.floor(i / 5)].id } }
 					}
 				});
 			})
 	);
+
 	const calendars = await Promise.all(
 		Array(rounds.length * 5)
 			.fill(undefined)
@@ -92,3 +94,13 @@ const main = async () => {
 			})
 	);
 };
+
+main()
+	.then(async () => {
+		await prisma.$disconnect();
+	})
+	.catch(async (e) => {
+		console.error(e);
+		await prisma.$disconnect();
+		process.exit(1);
+	});

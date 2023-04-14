@@ -4,11 +4,11 @@
 	import PlayerRanking from '$components/home/PlayerRanking.svelte';
 
 	export let data;
-	const { players, calendar, games } = data;
+	const { users, calendars, games } = data;
 </script>
 
 <div class="flex justify-center gap-4">
-	<PlayerRanking {players} />
-	<Calendar {calendar} />
+	<PlayerRanking {users} />
+	<Calendar {calendars} />
 	<LastGame {games} />
 </div>

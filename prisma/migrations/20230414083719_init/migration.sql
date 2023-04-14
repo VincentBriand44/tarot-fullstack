@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -5,8 +8,7 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "role" INTEGER NOT NULL DEFAULT 0,
-    "calendarId" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'USER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -26,6 +28,7 @@ CREATE TABLE "Season" (
 CREATE TABLE "Game" (
     "id" TEXT NOT NULL,
     "ended" BOOLEAN NOT NULL DEFAULT false,
+    "seasonId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -38,6 +41,8 @@ CREATE TABLE "Round" (
     "misdeal" BOOLEAN NOT NULL DEFAULT false,
     "card" INTEGER NOT NULL,
     "dealerId" TEXT NOT NULL,
+    "gameId" TEXT NOT NULL,
+    "auctionId" TEXT NOT NULL,
 
     CONSTRAINT "Round_pkey" PRIMARY KEY ("id")
 );
@@ -47,7 +52,6 @@ CREATE TABLE "Auction" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "value" INTEGER NOT NULL,
-    "roundId" TEXT NOT NULL,
 
     CONSTRAINT "Auction_pkey" PRIMARY KEY ("id")
 );
@@ -77,13 +81,7 @@ CREATE TABLE "_GameToUser" (
 );
 
 -- CreateTable
-CREATE TABLE "_GameToSeason" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "_GameToRound" (
+CREATE TABLE "_CalendarToUser" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
@@ -104,25 +102,22 @@ CREATE UNIQUE INDEX "_GameToUser_AB_unique" ON "_GameToUser"("A", "B");
 CREATE INDEX "_GameToUser_B_index" ON "_GameToUser"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_GameToSeason_AB_unique" ON "_GameToSeason"("A", "B");
+CREATE UNIQUE INDEX "_CalendarToUser_AB_unique" ON "_CalendarToUser"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_GameToSeason_B_index" ON "_GameToSeason"("B");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_GameToRound_AB_unique" ON "_GameToRound"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_GameToRound_B_index" ON "_GameToRound"("B");
+CREATE INDEX "_CalendarToUser_B_index" ON "_CalendarToUser"("B");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_calendarId_fkey" FOREIGN KEY ("calendarId") REFERENCES "Calendar"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Game" ADD CONSTRAINT "Game_seasonId_fkey" FOREIGN KEY ("seasonId") REFERENCES "Season"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Round" ADD CONSTRAINT "Round_dealerId_fkey" FOREIGN KEY ("dealerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Auction" ADD CONSTRAINT "Auction_roundId_fkey" FOREIGN KEY ("roundId") REFERENCES "Round"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Round" ADD CONSTRAINT "Round_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Round" ADD CONSTRAINT "Round_auctionId_fkey" FOREIGN KEY ("auctionId") REFERENCES "Auction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Score" ADD CONSTRAINT "Score_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -137,13 +132,7 @@ ALTER TABLE "_GameToUser" ADD CONSTRAINT "_GameToUser_A_fkey" FOREIGN KEY ("A") 
 ALTER TABLE "_GameToUser" ADD CONSTRAINT "_GameToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_GameToSeason" ADD CONSTRAINT "_GameToSeason_A_fkey" FOREIGN KEY ("A") REFERENCES "Game"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_CalendarToUser" ADD CONSTRAINT "_CalendarToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Calendar"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_GameToSeason" ADD CONSTRAINT "_GameToSeason_B_fkey" FOREIGN KEY ("B") REFERENCES "Season"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_GameToRound" ADD CONSTRAINT "_GameToRound_A_fkey" FOREIGN KEY ("A") REFERENCES "Game"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_GameToRound" ADD CONSTRAINT "_GameToRound_B_fkey" FOREIGN KEY ("B") REFERENCES "Round"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_CalendarToUser" ADD CONSTRAINT "_CalendarToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,14 +1,19 @@
 <script lang="ts">
-	import type { Calendar } from '$types/app';
+	import type { PageServerData } from '../../../routes/$types';
 
-	export let calendar: Calendar[];
+	export let calendars: PageServerData['calendars'];
 </script>
 
 <section class="flex flex-col w-64 p-4 rounded-xl bg-slate-900 module relative">
 	<h2 class="mb-2 text-lg font-bold text-center">Calendrier</h2>
 	<ul>
-		{#each calendar as { date }}
-			<li class="flex justify-between">{date}</li>
+		{#each calendars as { date }}
+			{@const format = new Date(date).toLocaleDateString('fr-FR', {
+				weekday: 'long',
+				day: 'numeric',
+				month: 'long'
+			})}
+			<li class="flex justify-between">{format}</li>
 		{/each}
 	</ul>
 	<a

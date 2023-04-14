@@ -1,15 +1,39 @@
-import type { Calendar, Game, User } from '$types/app';
+import { prisma } from '$lib/prisma';
 
-import calendar from '$lib/json/calendar.json';
-import games from '$lib/json/games.json';
-import users from '$lib/json/users.json';
+export const load = async () => {
+	const users = await prisma.user.findMany({
+		include: {
+			scores: {
+				select: {
+					value: true
+				}
+			}
+		}
+	});
+	const calendars = await prisma.calendar.findMany({
+		orderBy: {
+			date: 'asc'
+		}
+	});
+	const games = await prisma.game.findMany({
+		include: {
+			rounds: {
+				include: {
+					scores: {
+						include: {
+							user: true
+						}
+					}
+				}
+			},
+			season: {},
+			users: {}
+		}
+	});
 
-export const load = () => {
 	return {
-		players: users as User[],
-
-		calendar: calendar as Calendar[],
-
-		games: games as Game[]
+		users,
+		calendars,
+		games
 	};
 };

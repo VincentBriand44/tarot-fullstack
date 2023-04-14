@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Game } from '$types/app';
+	import type { PageServerData } from '../../../routes/$types';
 
 	interface Score {
 		name: string;
 		score: number;
 	}
 
-	export let games: Game[];
+	export let games: PageServerData['games'];
 	const game = games[games.length - 1];
 
 	const calcScore = () => {
@@ -32,6 +32,7 @@
 	const players = calcScore();
 </script>
 
+{@debug game}
 <section class="flex flex-col w-64 p-4 pb-6 rounded-xl bg-slate-900 module relative">
 	<h2 class="mb-2 text-lg font-bold text-center">Dernière partie</h2>
 	{#if game === undefined}
@@ -44,7 +45,7 @@
 				</li>
 			{/each}
 		</ul>
-		{#if game.end === undefined}
+		{#if game.ended === false}
 			<a
 				href="/games"
 				class="w-4/5 self-center bottom-4 px-2 py-1 mt-4 text-center rounded-lg bg-slate-800 absolute"
