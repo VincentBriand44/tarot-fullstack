@@ -32,7 +32,6 @@
 	const players = calcScore();
 </script>
 
-{@debug game}
 <section class="flex flex-col w-64 p-4 pb-6 rounded-xl bg-slate-900 module relative">
 	<h2 class="mb-2 text-lg font-bold text-center">Dernière partie</h2>
 	{#if game === undefined}

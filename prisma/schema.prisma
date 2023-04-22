@@ -31,7 +31,8 @@ model User {
 model Season {
   id String @id @default(cuid())
 
-  games Game[]
+  games  Game[]
+  scores Score[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -46,6 +47,7 @@ model Game {
 
   users  User[]
   rounds Round[]
+  scores Score[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,6 +87,12 @@ model Score {
 
   round   Round  @relation(fields: [roundId], references: [id])
   roundId String
+
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId String
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
 }
 
 model Calendar {
