@@ -3,8 +3,6 @@
 
 	const status = $page.status;
 	const message = status === 404 ? [`La page demandée n'existe pas.`] : $page.error?.message;
-
-	console.log('🚀 ~ file: +error.svelte:7 ~ $page.error:', $page.error);
 </script>
 
 <section class="fullpage">

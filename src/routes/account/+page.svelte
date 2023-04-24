@@ -2,7 +2,7 @@
 	import Icon from '$components/Icon.svelte';
 
 	export let data;
-	const { total, user } = data;
+	const { total, user, position, playedGames } = data;
 
 	let played = true;
 </script>
@@ -30,11 +30,11 @@
 					</li>
 					<li class="flex justify-between">
 						Classement
-						<span class="text-slate-400">0</span>
+						<span class="text-slate-400">{position}</span>
 					</li>
 					<li class="flex justify-between">
 						Parties jouées
-						<span class="text-slate-400">0</span>
+						<span class="text-slate-400">{playedGames}</span>
 					</li>
 				</ul>
 			{:else}
@@ -42,7 +42,7 @@
 			{/if}
 		</div>
 		<div class="bg-slate-900 rounded-xl px-4 py-2 w-full">
-			<h4 class="font-bold text-center">Médailles</h4>
+			<h4 class="font-bold text-center">Médailles <span class="text-red-500">(WIP)</span></h4>
 			<ul>
 				<li class="flex justify-between">
 					Médailles d'or
