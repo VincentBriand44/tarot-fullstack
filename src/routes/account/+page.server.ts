@@ -1,9 +1,10 @@
 import { prisma } from '$lib/prisma';
 
 export const load = async () => {
-	const users = await prisma.user.findMany({
-		take: 1,
-		skip: 1, //? change user by userId
+	const user = await prisma.user.findUnique({
+		where: {
+			id: 'clgsfglsv0002tsmf9fv0k8ws',
+		},
 		select: {
 			id: true,
 			name: true,
@@ -11,7 +12,6 @@ export const load = async () => {
 			role: true,
 		},
 	});
-	const user = users[0];
 
 	const season = await prisma.season.findFirst({
 		orderBy: {
@@ -35,7 +35,7 @@ export const load = async () => {
 			season: {
 				id: season.id,
 			},
-			userId: user.id,
+			userId: user?.id,
 		},
 		_sum: {
 			value: true,
@@ -59,7 +59,6 @@ export const load = async () => {
 			},
 		},
 	});
-	console.log('🚀 ~ file: +page.server.ts:67 ~ load ~ scoresAll:', scoresAll);
 	const position = scoresAll.map((e) => e._sum.value).indexOf(scores[0]._sum.value) + 1;
 
 	const playedGames = await prisma.game.count({
@@ -69,7 +68,7 @@ export const load = async () => {
 			},
 			users: {
 				some: {
-					id: user.id,
+					id: user?.id,
 				},
 			},
 		},
