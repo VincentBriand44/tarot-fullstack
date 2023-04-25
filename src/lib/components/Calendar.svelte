@@ -211,11 +211,11 @@
 		margin: 0;
 		color: #91565d;
 	}
-	.task-detail p {
+	/* .task-detail p {
 		margin-top: 4px;
 		font-size: 12px;
 		margin-bottom: 0;
 		font-weight: 500;
 		color: rgba(81, 86, 93, 0.7);
-	}
+	} */
 </style>
