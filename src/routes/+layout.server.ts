@@ -7,14 +7,14 @@ export const load = () => {
 				name: 'Accueil',
 				href: '/',
 				icon: 'mi-home',
-				active: true
+				active: true,
 			},
 			{
 				name: 'Parties',
 				href: 'games',
 				icon: 'mi-flag',
-				active: false
-			}
+				active: false,
+			},
 		] as Nav[],
 
 		accountDropdown: [
@@ -22,20 +22,20 @@ export const load = () => {
 				name: 'Mon compte',
 				href: '/account',
 				icon: undefined,
-				active: false
+				active: false,
 			},
 			{
 				name: 'Mes paramètres',
 				href: '/settings',
 				icon: undefined,
-				active: false
+				active: false,
 			},
 			{
 				name: 'Se déconnecter',
 				href: '/logout',
 				icon: undefined,
-				active: false
-			}
-		] as Nav[]
+				active: false,
+			},
+		] as Nav[],
 	};
 };

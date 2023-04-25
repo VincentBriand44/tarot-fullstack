@@ -1,13 +1,13 @@
 {
-  "apps": [
-    {
-      "name": "tarot",
-      "script": "./build/index.js",
-      "env_production": {
-        "NODE_ENV": "production"
-      },
-      "max_memory_restart": "500M",
-      "autorestart": true
-    }
-  ]
+	"apps": [
+		{
+			"name": "tarot",
+			"script": "./build/index.js",
+			"env_production": {
+				"NODE_ENV": "production"
+			},
+			"max_memory_restart": "500M",
+			"autorestart": true
+		}
+	]
 }

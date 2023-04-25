@@ -11,7 +11,7 @@
 			{@const format = new Date(date).toLocaleDateString('fr-FR', {
 				weekday: 'long',
 				day: 'numeric',
-				month: 'long'
+				month: 'long',
 			})}
 			<li class="flex justify-between">{format}</li>
 		{/each}

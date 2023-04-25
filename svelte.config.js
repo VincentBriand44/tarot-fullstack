@@ -11,9 +11,9 @@ const config = {
 			$components: './src/lib/components',
 			$css: './src/lib/css/index.css',
 			$types: './src/lib/types',
-			$routes: './src/routes'
-		}
-	}
+			$routes: './src/routes',
+		},
+	},
 };
 
 export default config;

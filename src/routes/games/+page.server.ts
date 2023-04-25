@@ -9,22 +9,22 @@ export const load = async () => {
 						include: {
 							scores: {
 								select: {
-									value: true
-								}
-							}
-						}
+									value: true,
+								},
+							},
+						},
 					},
 					users: {
 						select: {
-							name: true
-						}
-					}
-				}
-			}
-		}
+							name: true,
+						},
+					},
+				},
+			},
+		},
 	});
 
 	return {
-		seasons
+		seasons,
 	};
 };

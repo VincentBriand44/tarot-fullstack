@@ -15,19 +15,19 @@ const main = async () => {
 						password: faker.internet.password(),
 						name: faker.name.firstName() + ' ' + faker.name.lastName(),
 						email: faker.internet.email(),
-						role: faker.helpers.arrayElement(Object.keys(Role) as Role[])
-					}
+						role: faker.helpers.arrayElement(Object.keys(Role) as Role[]),
+					},
 				});
-			})
+			}),
 	);
 	const seasons = await Promise.all(
 		Array(1)
 			.fill(undefined)
 			.map(() => {
 				return prisma.season.create({
-					data: {}
+					data: {},
 				});
-			})
+			}),
 	);
 	const games = await Promise.all(
 		Array(5)
@@ -38,24 +38,24 @@ const main = async () => {
 						ended: faker.datatype.boolean(),
 						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
 						users: {
-							connect: users.filter((_, i) => i < 5).map((user) => Object({ id: user.id }))
-						}
-					}
+							connect: users.filter((_, i) => i < 5).map((user) => Object({ id: user.id })),
+						},
+					},
 				});
-			})
+			}),
 	);
 	games.forEach(async (game) => {
 		await prisma.season.update({
 			data: {
 				games: {
 					connect: {
-						id: game.id
-					}
-				}
+						id: game.id,
+					},
+				},
 			},
 			where: {
-				id: seasons[0].id
-			}
+				id: seasons[0].id,
+			},
 		});
 	});
 	const auctions = await Promise.all(
@@ -65,10 +65,10 @@ const main = async () => {
 				return prisma.auction.create({
 					data: {
 						name: faker.music.genre(),
-						value: Math.floor(Math.random() * 3) * 50
-					}
+						value: Math.floor(Math.random() * 3) * 50,
+					},
 				});
-			})
+			}),
 	);
 	const rounds = await Promise.all(
 		Array(20)
@@ -80,10 +80,10 @@ const main = async () => {
 						card: Math.ceil(Math.random() * 4),
 						dealer: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
 						game: { connect: { id: games[Math.floor(Math.random() * games.length)].id } },
-						auction: { connect: { id: auctions[Math.floor(Math.random() * auctions.length)].id } }
-					}
+						auction: { connect: { id: auctions[Math.floor(Math.random() * auctions.length)].id } },
+					},
 				});
-			})
+			}),
 	);
 	const scores = await Promise.all(
 		Array(rounds.length * 5)
@@ -95,10 +95,10 @@ const main = async () => {
 						user: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
 						round: { connect: { id: rounds[Math.floor(i / 5)].id } },
 						game: { connect: { id: games[Math.floor(Math.random() * games.length)].id } },
-						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } }
-					}
+						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
+					},
 				});
-			})
+			}),
 	);
 
 	const calendars = await Promise.all(
@@ -109,11 +109,11 @@ const main = async () => {
 					data: {
 						date: faker.date.future(),
 						users: {
-							connect: users.map((user) => ({ id: user.id }))
-						}
-					}
+							connect: users.map((user) => ({ id: user.id })),
+						},
+					},
 				});
-			})
+			}),
 	);
 };
 

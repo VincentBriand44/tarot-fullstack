@@ -5,15 +5,15 @@ export const load = async () => {
 		include: {
 			scores: {
 				select: {
-					value: true
-				}
-			}
-		}
+					value: true,
+				},
+			},
+		},
 	});
 	const calendars = await prisma.calendar.findMany({
 		orderBy: {
-			date: 'asc'
-		}
+			date: 'asc',
+		},
 	});
 	const games = await prisma.game.findMany({
 		include: {
@@ -21,19 +21,19 @@ export const load = async () => {
 				include: {
 					scores: {
 						include: {
-							user: true
-						}
-					}
-				}
+							user: true,
+						},
+					},
+				},
 			},
 			season: {},
-			users: {}
-		}
+			users: {},
+		},
 	});
 
 	return {
 		users,
 		calendars,
-		games
+		games,
 	};
 };
