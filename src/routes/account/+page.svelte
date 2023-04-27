@@ -2,7 +2,8 @@
 	import Icon from '$components/Icon.svelte';
 
 	export let data;
-	const { total, user, position, playedGames } = data;
+	const { total, user, position, playedGames, games } = data;
+	const lastGames = games?.games || [];
 
 	let played = true;
 </script>
@@ -56,6 +57,19 @@
 					Médailles d'bronze
 					<span class="text-slate-400">0</span>
 				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="flex justify-center gap-4 mt-8 w-full max-w-5xl">
+		<div class="bg-slate-900 rounded-xl px-4 py-2 w-full">
+			<h4 class="font-bold text-center">Dernières parties</h4>
+			<ul class="flex flex-col gap-2 py-2">
+				{#each lastGames as game}
+					<li class="bg-slate-800 rounded-xl py-2 px-4">
+						{new Date(game.createdAt).toLocaleDateString('fr')} -
+					</li>
+				{/each}
 			</ul>
 		</div>
 	</section>

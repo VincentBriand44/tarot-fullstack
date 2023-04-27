@@ -61,23 +61,45 @@ export const load = async () => {
 	});
 	const position = scoresAll.map((e) => e._sum.value).indexOf(scores[0]._sum.value) + 1;
 
-	const playedGames = await prisma.game.count({
+	const games = await prisma.season.findUnique({
 		where: {
-			season: {
-				id: season.id,
+			id: season.id,
+		},
+		select: {
+			games: {
+				where: {
+					users: {
+						some: {
+							id: user?.id,
+						},
+					},
+				},
+				include: {
+					scores: {
+						where: {
+							userId: user?.id,
+						},
+						select: {
+							value: true,
+						},
+					},
+				},
 			},
-			users: {
-				some: {
-					id: user?.id,
+			_count: {
+				select: {
+					games: true,
 				},
 			},
 		},
 	});
+	const playedGames = games?._count.games;
+	console.log('🚀 ~ file: +page.server.ts:85 ~ load ~ games:', games?.games[0]);
 
 	return {
 		user,
 		total,
 		position,
 		playedGames,
+		games,
 	};
 };
