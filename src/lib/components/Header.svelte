@@ -12,15 +12,15 @@
 	};
 </script>
 
-<header class="flex items-center justify-end w-full h-16 px-16">
+<header class="flex items-center justify-end w-full h-16 px-4 xl:px-16">
 	<button
-		class="relative flex items-center justify-center w-12 h-12 rounded-full bg-slate-900 hover:bg-slate-900/75"
+		class="relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-slate-900 hover:bg-slate-900/75"
 		on:click={toggleDropdown}
 	>
 		<Icon icon="mi-user" />
 
 		<ul
-			class={`absolute right-0 p-2 top-14 w-max rounded-xl bg-slate-900 ${
+			class={`absolute right-0 p-2 top-14 w-max rounded-xl bg-slate-900 border border-slate-950 2xl:border-none ${
 				showDropdown ? 'block' : 'hidden'
 			}`}
 		>

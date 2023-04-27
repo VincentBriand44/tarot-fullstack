@@ -8,7 +8,7 @@
 </script>
 
 <div
-	class="grid h-auto grid-rows-4 gap-4 px-4 mx-auto my-3 sm:grid-cols-2 sm:grid-rows-2 h-container max-w-7xl"
+	class="grid h-auto max-w-5xl grid-rows-4 gap-4 mx-auto my-3 sm:grid-cols-2 sm:grid-rows-2 h-container"
 >
 	<PlayerRanking {users} />
 	<Calendar {calendars} />

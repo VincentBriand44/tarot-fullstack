@@ -8,7 +8,7 @@
 	export let data: LayoutData;
 </script>
 
-<main class="h-main marker:mb-20">
+<main class="px-4 h-main marker:mb-20">
 	<Header accountDropdown={data.accountDropdown} />
 	<slot />
 	<Navbar nav={data.nav} />
