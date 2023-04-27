@@ -1,0 +1,12 @@
+{
+	"material-icon-theme.activeIconPack": "none",
+	"search.exclude": {
+		"**/.yarn": true,
+		"**/.pnp.*": true,
+		"yarn.lock": true
+	},
+	"eslint.nodePath": ".yarn/sdks",
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true
+}
