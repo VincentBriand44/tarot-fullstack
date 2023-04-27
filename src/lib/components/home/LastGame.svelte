@@ -32,14 +32,14 @@
 	const players = calcScore();
 </script>
 
-<section class="flex flex-col w-64 p-4 pb-6 rounded-xl bg-slate-900 module relative">
+<section class="relative flex flex-col w-full h-full p-4 pb-6 rounded-xl bg-slate-900 module">
 	<h2 class="mb-2 text-lg font-bold text-center">Dernière partie</h2>
 	{#if game === undefined}
 		<h3 class="mb-2 text-lg text-center">Il n'y a aucune partie</h3>
 	{:else}
-		<ul class="w-full">
+		<ul class="w-full content">
 			{#each players as { name, score }}
-				<li class="flex justify-between">
+				<li class="flex justify-between content">
 					{name}<span class="text-slate-400">{score}</span>
 				</li>
 			{/each}
@@ -47,13 +47,13 @@
 		{#if game.ended === false}
 			<a
 				href="/games"
-				class="w-4/5 self-center bottom-4 px-2 py-1 mt-4 text-center rounded-lg bg-slate-800 absolute"
+				class="absolute self-center w-4/5 px-2 py-1 mt-4 text-center rounded-lg bottom-4 bg-slate-800"
 				>Rejoindre la partie</a
 			>
 		{:else}
 			<a
 				href="/games"
-				class="w-4/5 self-center bottom-4 px-2 py-1 mt-4 text-center rounded-lg bg-slate-800 absolute"
+				class="absolute self-center w-4/5 px-2 py-1 mt-4 text-center rounded-lg bottom-4 bg-slate-800"
 				>Voir plus de détails</a
 			>
 		{/if}

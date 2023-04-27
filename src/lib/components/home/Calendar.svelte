@@ -4,9 +4,9 @@
 	export let calendars: PageServerData['calendars'];
 </script>
 
-<section class="flex flex-col w-64 p-4 rounded-xl bg-slate-900 module relative">
+<section class="relative flex flex-col w-full h-full p-4 rounded-xl bg-slate-900 module">
 	<h2 class="mb-2 text-lg font-bold text-center">Calendrier</h2>
-	<ul>
+	<ul class="content">
 		{#each calendars as { date }}
 			{@const format = new Date(date).toLocaleDateString('fr-FR', {
 				weekday: 'long',
@@ -18,7 +18,7 @@
 	</ul>
 	<a
 		href="/calendar"
-		class="w-4/5 self-center bottom-4 px-2 py-1 mt-4 text-center rounded-lg bg-slate-800 absolute"
+		class="absolute self-center w-4/5 px-2 py-1 mt-4 text-center rounded-lg bottom-4 bg-slate-800"
 		>Modifier</a
 	>
 </section>
