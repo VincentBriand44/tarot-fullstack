@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import Icon from '$components/Icon.svelte';
 
 	export let data;
-	const { total, user, position, playedGames, games, medalsCount = [] } = data;
+	const { total, user, position, playedGames, games, medalsCount = [], scoresGame } = data;
+
 	const lastGames = games?.games || [];
 
 	const medals = [
@@ -21,6 +22,12 @@
 	];
 
 	let played = true;
+
+	const positionGame = (gameId: string) => {
+		const game = scoresGame?.filter((game) => game.gameId === gameId);
+
+		return game ? game?.findIndex((item) => item.userId === user?.id) + 1 : 'N/A';
+	};
 </script>
 
 <div class="flex flex-col items-center">
@@ -75,8 +82,23 @@
 			<h4 class="font-bold text-center">Dernières parties</h4>
 			<ul class="flex flex-col gap-2 py-2">
 				{#each lastGames as game}
-					<li class="bg-slate-800 rounded-xl py-2 px-4">
-						{new Date(game.createdAt).toLocaleDateString('fr')} -
+					<li class="bg-slate-800 rounded-xl py-2 px-4 relative flex justify-between">
+						<p>
+							Partie jouer le
+							<span class="text-red-500">{new Date(game.createdAt).toLocaleDateString('fr')}</span>
+							et vous avez fini à la
+							<span class="text-red-500">
+								{positionGame(game.id) === 1
+									? `${positionGame(game.id)}ère`
+									: `${positionGame(game.id)}ème`}
+							</span>
+							place.
+						</p>
+						<a href={`/game/${game?.id}`}>
+							<button class="bg-slate-900 text-blue-500 rounded-lg px-2 hover:bg-slate-950">
+								Accèder au détails
+							</button>
+						</a>
 					</li>
 				{/each}
 			</ul>
