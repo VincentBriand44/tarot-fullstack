@@ -20,6 +20,7 @@ const main = async () => {
 				});
 			}),
 	);
+
 	const seasons = await Promise.all(
 		Array(1)
 			.fill(undefined)
@@ -29,6 +30,7 @@ const main = async () => {
 				});
 			}),
 	);
+
 	const games = await Promise.all(
 		Array(5)
 			.fill(undefined)
@@ -44,6 +46,7 @@ const main = async () => {
 				});
 			}),
 	);
+
 	games.forEach(async (game) => {
 		await prisma.season.update({
 			data: {
@@ -58,6 +61,7 @@ const main = async () => {
 			},
 		});
 	});
+
 	const auctions = await Promise.all(
 		Array(4)
 			.fill(undefined)
@@ -70,6 +74,7 @@ const main = async () => {
 				});
 			}),
 	);
+
 	const rounds = await Promise.all(
 		Array(20)
 			.fill(undefined)
@@ -85,6 +90,7 @@ const main = async () => {
 				});
 			}),
 	);
+
 	const scores = await Promise.all(
 		Array(rounds.length * 5)
 			.fill(undefined)
@@ -111,6 +117,20 @@ const main = async () => {
 						users: {
 							connect: users.map((user) => ({ id: user.id })),
 						},
+					},
+				});
+			}),
+	);
+
+	const medals = await Promise.all(
+		Array(100)
+			.fill(undefined)
+			.map(() => {
+				return prisma.medal.create({
+					data: {
+						seasonId: seasons[Math.floor(Math.random() * seasons.length)].id,
+						medal: faker.helpers.arrayElement(['GOLD', 'SILVER', 'BRONZE']),
+						user: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
 					},
 				});
 			}),

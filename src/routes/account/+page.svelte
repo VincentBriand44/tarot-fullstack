@@ -2,8 +2,23 @@
 	import Icon from '$components/Icon.svelte';
 
 	export let data;
-	const { total, user, position, playedGames, games } = data;
+	const { total, user, position, playedGames, games, medalsCount = [] } = data;
 	const lastGames = games?.games || [];
+
+	const medals = [
+		{
+			name: "Médailles d'or",
+			count: medalsCount[0],
+		},
+		{
+			name: "Médailles d'argent",
+			count: medalsCount[1],
+		},
+		{
+			name: "Médailles d'bronze",
+			count: medalsCount[2],
+		},
+	];
 
 	let played = true;
 </script>
@@ -43,20 +58,14 @@
 			{/if}
 		</div>
 		<div class="bg-slate-900 rounded-xl px-4 py-2 w-full">
-			<h4 class="font-bold text-center">Médailles <span class="text-red-500">(WIP)</span></h4>
+			<h4 class="font-bold text-center">Médailles</h4>
 			<ul>
-				<li class="flex justify-between">
-					Médailles d'or
-					<span class="text-slate-400">0</span>
-				</li>
-				<li class="flex justify-between">
-					Médailles d'argent
-					<span class="text-slate-400">0</span>
-				</li>
-				<li class="flex justify-between">
-					Médailles d'bronze
-					<span class="text-slate-400">0</span>
-				</li>
+				{#each medals as medal}
+					<li class="flex justify-between">
+						{medal.name}
+						<span class="text-slate-400">{medal.count}</span>
+					</li>
+				{/each}
 			</ul>
 		</div>
 	</section>

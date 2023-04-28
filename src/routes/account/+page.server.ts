@@ -3,7 +3,7 @@ import { prisma } from '$lib/prisma';
 export const load = async () => {
 	const user = await prisma.user.findUnique({
 		where: {
-			id: 'clgsfglsv0002tsmf9fv0k8ws',
+			id: 'clh0eog5n0000tsrgt4opns7b',
 		},
 		select: {
 			id: true,
@@ -12,6 +12,32 @@ export const load = async () => {
 			role: true,
 		},
 	});
+
+	const medals = await prisma.medal.groupBy({
+		by: ['medal'],
+		where: {
+			userId: user?.id,
+		},
+		_count: {
+			_all: true,
+		},
+	});
+	console.log('🚀 ~ file: +page.server.ts:25 ~ load ~ medals:', medals);
+
+	const medalsCounter = () => {
+		const arr = [0, 0, 0];
+		medals?.map((e) => {
+			if (e.medal.includes('GOLD')) {
+				arr[0] = e._count._all;
+			} else if (e.medal.includes('SILVER')) {
+				arr[1] = e._count._all;
+			} else if (e.medal.includes('BRONZE')) {
+				arr[2] = e._count._all;
+			}
+		});
+		return arr;
+	};
+	const medalsCount = medalsCounter();
 
 	const season = await prisma.season.findFirst({
 		orderBy: {
@@ -26,6 +52,7 @@ export const load = async () => {
 		return {
 			users: user,
 			scores: [],
+			medals: [],
 		};
 	}
 
@@ -93,7 +120,6 @@ export const load = async () => {
 		},
 	});
 	const playedGames = games?._count.games;
-	console.log('🚀 ~ file: +page.server.ts:85 ~ load ~ games:', games?.games[0]);
 
 	return {
 		user,
@@ -101,5 +127,6 @@ export const load = async () => {
 		position,
 		playedGames,
 		games,
+		medalsCount,
 	};
 };

@@ -23,6 +23,7 @@ model User {
   games  Game[]
   rounds Round[]
   scores Score[]
+  medals Medal[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -100,6 +101,23 @@ model Calendar {
   date DateTime
 
   users User[]
+}
+
+model Medal {
+  id       String    @id @default(cuid())
+  seasonId String
+  medal    MedalType
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt DateTime @default(now())
+}
+
+enum MedalType {
+  GOLD
+  SILVER
+  BRONZE
 }
 
 enum Role {
