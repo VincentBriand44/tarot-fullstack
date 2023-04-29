@@ -1,0 +1,63 @@
+<script lang="ts">
+	export let data;
+	const { game } = data;
+	const users = game?.users || [];
+	const rounds = game?.rounds || [];
+
+	const editMode = false;
+</script>
+
+<div class="flex flex-col items-center">
+	<section class="flex justify-center w-full max-w-5xl gap-4 mt-8">
+		<div class="w-full px-4 py-2 bg-slate-900 rounded-xl">
+			<table class="w-full">
+				<thead>
+					<tr>
+						{#each users as user, index}
+							<th colspan={index}>{user.name}</th>
+						{/each}
+						<th colspan="5">Mise</th>
+						<th colspan="6">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each rounds as { scores }}
+						<tr>
+							{#each scores as score, index}
+								<td colspan={index} class="text-center">{score.value}</td>
+							{/each}
+							<td colspan="5" class="text-center">O</td>
+							<td colspan="6" class="text-center">X</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+			<div class="flex gap-2 mt-2">
+				{#if editMode}
+					{#each Array(5) as _, index}
+						<input
+							type="number"
+							name={index.toString()}
+							class="w-full px-2 py-1 rounded-lg bg-slate-950"
+						/>
+					{/each}
+				{:else}
+					<select name="taker" class="w-full px-2 py-1 rounded-lg bg-slate-950">
+						<option value={null}>Choisir le preneur</option>
+						{#each users as { name, id }}
+							<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">{name}</option>
+						{/each}
+					</select>
+					<select name="conscript" class="w-full px-2 py-1 rounded-lg bg-slate-950" disabled>
+						<option value={null}>Choisir l'appelé</option>
+						{#each users as { name, id }}
+							<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">{name}</option>
+						{/each}
+					</select>
+					<input type="number" class="w-full px-2 py-1 rounded-lg bg-slate-950" disabled />
+				{/if}
+				<button class="w-full px-2 py-1 rounded-lg bg-slate-950">Envoyer</button>
+			</div>
+		</div>
+	</section>
+</div>
