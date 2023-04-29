@@ -37,7 +37,7 @@ const main = async () => {
 			.map(() => {
 				return prisma.game.create({
 					data: {
-						ended: faker.datatype.boolean(),
+						ended: true,
 						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
 						users: {
 							connect: users.filter((_, i) => i < 5).map((user) => Object({ id: user.id })),

@@ -6,12 +6,13 @@ export const load = async () => {
 		skip: 2,
 		take: 1,
 	});
-	const game = await prisma.game.findUnique({
+	const [game] = await prisma.game.findMany({
 		where: {
-			id: 'clh0eog9n000etsrgzb175t4e',
+			ended: false,
 		},
 		select: {
 			id: true,
+			ended: true,
 			rounds: {
 				select: {
 					scores: {
@@ -29,6 +30,7 @@ export const load = async () => {
 				},
 			},
 		},
+		take: 1,
 	});
 
 	return {

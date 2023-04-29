@@ -21,19 +21,16 @@ export const load = () => {
 			{
 				name: 'Mon compte',
 				href: '/account',
-				icon: undefined,
 				active: false,
 			},
 			{
 				name: 'Mes paramètres',
 				href: '/settings',
-				icon: undefined,
 				active: false,
 			},
 			{
 				name: 'Se déconnecter',
 				href: '/logout',
-				icon: undefined,
 				active: false,
 			},
 		] as Nav[],

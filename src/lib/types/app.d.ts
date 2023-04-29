@@ -1,7 +1,7 @@
 export interface Nav {
 	name: string;
 	href: string;
-	icon: string | undefined;
+	icon?: string;
 	active: boolean;
 }
 

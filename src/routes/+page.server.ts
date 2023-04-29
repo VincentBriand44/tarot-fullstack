@@ -10,11 +10,13 @@ export const load = async () => {
 			},
 		},
 	});
+
 	const calendars = await prisma.calendar.findMany({
 		orderBy: {
 			date: 'asc',
 		},
 	});
+
 	const games = await prisma.game.findMany({
 		include: {
 			rounds: {
