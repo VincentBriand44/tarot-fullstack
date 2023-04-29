@@ -11,7 +11,7 @@ export const load = () => {
 			},
 			{
 				name: 'Parties',
-				href: 'games',
+				href: '/games',
 				icon: 'mi-flag',
 				active: false,
 			},
