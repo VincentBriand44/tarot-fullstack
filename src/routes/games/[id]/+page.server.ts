@@ -5,11 +5,24 @@ export const load = async ({ params }) => {
 		where: {
 			id: params.id,
 		},
-		include: {
-			rounds: true,
-			scores: true,
-			season: true,
-			users: true,
+		select: {
+			id: true,
+			rounds: {
+				select: {
+					scores: {
+						select: {
+							userId: true,
+							value: true,
+						},
+					},
+				},
+			},
+			users: {
+				select: {
+					id: true,
+					name: true,
+				},
+			},
 		},
 	});
 

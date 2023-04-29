@@ -46,7 +46,7 @@
 		</ul>
 		{#if game.ended === false}
 			<a
-				href="/games"
+				href="/games/play"
 				class="absolute self-center w-4/5 px-2 py-1 mt-4 text-center rounded-lg bottom-4 bg-slate-800"
 				>Rejoindre la partie</a
 			>
