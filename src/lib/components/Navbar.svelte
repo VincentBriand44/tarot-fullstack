@@ -20,9 +20,9 @@
 							<Icon {icon} />
 						{/if}
 					</div>
-					<span class={`mt-1 text-xs select-none ${active ? 'text-slate-400' : 'text-slate-500'}`}
-						>{name}</span
-					>
+					<span class={`mt-1 text-xs select-none ${active ? 'text-slate-400' : 'text-slate-500'}`}>
+						{name}
+					</span>
 				</a>
 			</li>
 		{/each}

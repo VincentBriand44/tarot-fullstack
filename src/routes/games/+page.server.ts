@@ -1,7 +1,14 @@
 import { prisma } from '$lib/prisma';
 
 export const load = async () => {
-	const seasons = await prisma.season.findMany({
+	//TODO - Add logic
+	const [user] = await prisma.user.findMany({
+		skip: 4,
+		take: 1,
+	});
+
+	const [season] = await prisma.season.findMany({
+		take: 1,
 		include: {
 			games: {
 				include: {
@@ -24,7 +31,18 @@ export const load = async () => {
 		},
 	});
 
+	const [isEnded] = await prisma.game.findMany({
+		select: {
+			ended: true,
+		},
+		where: {
+			ended: false,
+		},
+	});
+
 	return {
-		seasons,
+		season,
+		user,
+		isEnded,
 	};
 };
