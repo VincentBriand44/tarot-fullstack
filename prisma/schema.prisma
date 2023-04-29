@@ -11,19 +11,19 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(cuid())
-  username String @unique
+  id       String  @id @default(cuid())
+  username String  @unique
   password String
-  name     String @unique
-  email    String @unique
-  role     Role   @default(USER)
+  name     String  @unique
+  email    String  @unique
+  selected Boolean @default(false)
 
+  role      Role       @default(USER)
   calendars Calendar[]
-
-  games  Game[]
-  rounds Round[]
-  scores Score[]
-  medals Medal[]
+  games     Game[]
+  rounds    Round[]
+  scores    Score[]
+  medals    Medal[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -8,13 +8,14 @@ const main = async () => {
 	const users = await Promise.all(
 		Array(6)
 			.fill(undefined)
-			.map(() => {
+			.map((_, i) => {
 				return prisma.user.create({
 					data: {
 						username: faker.internet.userName(),
 						password: faker.internet.password(),
 						name: faker.name.firstName() + ' ' + faker.name.lastName(),
 						email: faker.internet.email(),
+						selected: i < 5,
 						role: faker.helpers.arrayElement(Object.keys(Role) as Role[]),
 					},
 				});
@@ -34,10 +35,10 @@ const main = async () => {
 	const games = await Promise.all(
 		Array(5)
 			.fill(undefined)
-			.map(() => {
+			.map((_, i, arr) => {
 				return prisma.game.create({
 					data: {
-						ended: true,
+						ended: i === arr.length - 1,
 						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
 						users: {
 							connect: users.filter((_, i) => i < 5).map((user) => Object({ id: user.id })),
