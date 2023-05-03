@@ -2,9 +2,8 @@ import { prisma } from '$lib/prisma';
 
 export const load = async () => {
 	//TODO - Add logic
-	const [user] = await prisma.user.findMany({
+	const user = await prisma.user.findFirst({
 		skip: 4,
-		take: 1,
 	});
 
 	const users = await prisma.user.findMany({

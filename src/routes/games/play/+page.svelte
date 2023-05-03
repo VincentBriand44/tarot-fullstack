@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confirm from '$components/Confirm.svelte';
 	import Icon from '$components/Icon.svelte';
 
 	export let data;
@@ -11,6 +12,7 @@
 	let taker: string = '';
 	let conscript: string = '';
 	let score: number = 0;
+	let active = false;
 </script>
 
 <div class="flex flex-col items-center">
@@ -22,7 +24,7 @@
 						{#each users as { name }, index}
 							<th colspan={index + 1}>{name}</th>
 						{/each}
-						{#if user.role === 'ADMIN'}
+						{#if user?.role === 'ADMIN'}
 							<th colspan="5">Mise</th>
 							<th colspan="6">Actions</th>
 						{/if}
@@ -34,7 +36,7 @@
 							{#each scores as { value }, index}
 								<td colspan={index + 1} class="text-center">{value}</td>
 							{/each}
-							{#if user.role === 'ADMIN'}
+							{#if user?.role === 'ADMIN'}
 								<td colspan="5" class="text-center">O</td>
 								<td colspan="6" class="text-center">X</td>
 							{/if}
@@ -42,7 +44,7 @@
 					{/each}
 				</tbody>
 			</table>
-			{#if user.role === 'ADMIN'}
+			{#if user?.role === 'ADMIN'}
 				<div class="flex gap-2 mt-2">
 					{#if editMode}
 						{#each Array(5) as _, index}
@@ -53,37 +55,41 @@
 							/>
 						{/each}
 					{:else}
-						<select
-							name="taker"
-							class="w-full px-2 py-1 rounded-lg bg-slate-950"
-							on:change={(e) => (taker = e.currentTarget.value)}
-						>
-							<option value="">Choisir le preneur</option>
-							{#each users as { name, id }}
-								<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">{name}</option>
-							{/each}
-						</select>
-						<select
-							name="conscript"
-							class="w-full px-2 py-1 rounded-lg bg-slate-950"
-							disabled={taker === ''}
-							on:change={(e) => (conscript = e.currentTarget.value)}
-						>
-							<option value="">Choisir l'appelé</option>
-							{#each users as { name, id }}
-								{#if id !== taker}
+						<form method="POST">
+							<select
+								name="taker"
+								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								on:change={(e) => (taker = e.currentTarget.value)}
+							>
+								<option value="">Choisir le preneur</option>
+								{#each users as { name, id }}
 									<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">{name}</option
 									>
-								{/if}
-							{/each}
-						</select>
-						<input
-							type="number"
-							class="w-full px-2 py-1 rounded-lg bg-slate-950"
-							placeholder={taker !== '' ? 'Score du preneur' : ''}
-							disabled={taker === ''}
-							on:change={(e) => (score = parseInt(e.currentTarget.value))}
-						/>
+								{/each}
+							</select>
+							<select
+								name="conscript"
+								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								disabled={taker === ''}
+								on:change={(e) => (conscript = e.currentTarget.value)}
+							>
+								<option value="">Choisir l'appelé</option>
+								{#each users as { name, id }}
+									{#if id !== taker}
+										<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950"
+											>{name}</option
+										>
+									{/if}
+								{/each}
+							</select>
+							<input
+								type="number"
+								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								placeholder={taker !== '' ? 'Score du preneur' : ''}
+								disabled={taker === ''}
+								on:change={(e) => (score = parseInt(e.currentTarget.value))}
+							/>
+						</form>
 					{/if}
 					<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
 					<button
@@ -96,10 +102,19 @@
 		</div>
 	</section>
 	<section class="flex justify-center w-full max-w-5xl gap-4 mt-8">
-		{#if user.role === 'ADMIN'}
-			<button class="font-semibold bg-slate-900 py-2 px-4 rounded-lg text-red-500">
+		{#if user?.role === 'ADMIN'}
+			<button
+				class="px-4 py-2 font-semibold text-red-500 rounded-lg bg-slate-900"
+				on:click={() => (active = true)}
+				on:keypress={(e) => e.key === 'Enter' && (active = true)}
+			>
 				Terminer la partie
 			</button>
 		{/if}
 	</section>
+	<Confirm
+		{active}
+		title="Êtes-vous sûr de vouloir terminer la partie ?"
+		result={() => console.log('test')}
+	/>
 </div>

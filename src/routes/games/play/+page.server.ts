@@ -2,11 +2,10 @@ import { prisma } from '$lib/prisma';
 
 export const load = async () => {
 	//TODO - Add logic
-	const [user] = await prisma.user.findMany({
+	const user = await prisma.user.findFirst({
 		skip: 4,
-		take: 1,
 	});
-	const [game] = await prisma.game.findMany({
+	const game = await prisma.game.findFirst({
 		where: {
 			ended: false,
 		},
@@ -30,11 +29,17 @@ export const load = async () => {
 				},
 			},
 		},
-		take: 1,
 	});
 
 	return {
 		game,
 		user,
 	};
+};
+
+export const actions = {
+	default: async ({ request }) => {
+		const data = await request.formData();
+		// prisma.game.update(); //TODO - Add logic
+	},
 };
