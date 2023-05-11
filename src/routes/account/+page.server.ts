@@ -3,7 +3,9 @@ import { prisma } from '$lib/prisma';
 export const load = async () => {
 	//TODO - Add logic
 	const user = await prisma.user.findFirst({
-		skip: 4,
+		where: {
+			role: 'ADMIN',
+		},
 	});
 
 	const medals = await prisma.medal.groupBy({

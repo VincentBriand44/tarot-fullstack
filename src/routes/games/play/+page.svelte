@@ -1,19 +1,22 @@
 <script lang="ts">
 	import Confirm from '$components/Confirm.svelte';
-	import Icon from '$components/Icon.svelte';
 
 	export let data;
 	const { game, user } = data;
 	const users = game?.users || [];
 	const rounds = game?.rounds || [];
 
-	const editMode = false;
+	let editMode = false;
 
 	let taker: string = '';
 	let conscript: string = '';
 	let score: number = 0;
 	let active: boolean = false;
 	let gameId: string = game?.id ?? '';
+
+	const handleClick = () => {
+		editMode = !editMode;
+	};
 </script>
 
 <div class="flex flex-col items-center">
@@ -49,13 +52,10 @@
 				<form method="POST">
 					<div class="flex gap-2 mt-2">
 						{#if editMode}
-							{#each Array(5) as _, index}
-								<input
-									type="number"
-									name={index.toString()}
-									class="w-full px-2 py-1 rounded-lg bg-slate-950"
-								/>
+							{#each users as { id }}
+								<input type="number" name={id} class="w-full px-2 py-1 rounded-lg bg-slate-950" />
 							{/each}
+							<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
 						{:else}
 							<select
 								name="taker"
@@ -83,23 +83,26 @@
 									{/if}
 								{/each}
 							</select>
-							<!-- delete null and value: +6 lines -->
 							<input
 								type="number"
 								class="w-full px-2 py-1 rounded-lg bg-slate-950"
 								name="score"
-								placeholder={taker !== '' ? 'Score du preneur' : ''}
-								disabled={taker === '' && null}
-								value={100}
+								placeholder={taker === '' ? 'Score du preneur' : ''}
+								disabled={taker === ''}
 								on:change={(e) => (score = parseInt(e.currentTarget.value))}
 							/>
 						{/if}
-						<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
 						<button
+							class="px-2 py-1 rounded-lg w-96 bg-slate-950"
+							on:click|preventDefault={handleClick}
+						>
+							Valider
+						</button>
+						<!-- <button
 							class="flex items-center justify-center w-8 px-2 py-1 bg-red-700 rounded-lg hover:bg-red-600"
 						>
 							<Icon icon="mi-chevron-double-right" />
-						</button>
+						</button> -->
 					</div>
 				</form>
 			{/if}

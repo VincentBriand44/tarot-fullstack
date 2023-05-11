@@ -57,7 +57,7 @@ model Game {
 model Round {
   id      String  @id @default(cuid())
   misdeal Boolean @default(false)
-  card    Int
+  card    Card?
 
   dealer   User   @relation(fields: [dealerId], references: [id])
   dealerId String
@@ -126,4 +126,11 @@ enum MedalType {
 enum Role {
   ADMIN
   USER
+}
+
+enum Card {
+  HEART
+  TILE
+  CLOVER
+  PIKE
 }

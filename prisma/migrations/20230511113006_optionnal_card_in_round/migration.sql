@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Round" ALTER COLUMN "card" DROP NOT NULL;

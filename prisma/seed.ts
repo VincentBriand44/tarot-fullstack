@@ -38,8 +38,8 @@ const main = async () => {
 			.map((_, i, arr) => {
 				return prisma.game.create({
 					data: {
-						ended: i === arr.length - 1,
-						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
+						ended: i !== arr.length - 1,
+						season: { connect: { id: seasons[Math.trunc(Math.random() * seasons.length)].id } },
 						users: {
 							connect: users.filter((_, i) => i < 5).map((user) => Object({ id: user.id })),
 						},
@@ -63,18 +63,32 @@ const main = async () => {
 		});
 	});
 
-	const auctions = await Promise.all(
-		Array(4)
-			.fill(undefined)
-			.map(() => {
-				return prisma.auction.create({
-					data: {
-						name: faker.music.genre(),
-						value: Math.floor(Math.random() * 3) * 50,
-					},
-				});
-			}),
-	);
+	const auctions = await Promise.all([
+		await prisma.auction.create({
+			data: {
+				name: 'skip',
+				value: 0,
+			},
+		}),
+		await prisma.auction.create({
+			data: {
+				name: 'garde',
+				value: 0,
+			},
+		}),
+		await prisma.auction.create({
+			data: {
+				name: 'garde sans',
+				value: 10,
+			},
+		}),
+		await prisma.auction.create({
+			data: {
+				name: 'garde contre',
+				value: 20,
+			},
+		}),
+	]);
 
 	const rounds = await Promise.all(
 		Array(20)
@@ -83,10 +97,12 @@ const main = async () => {
 				return prisma.round.create({
 					data: {
 						misdeal: faker.datatype.boolean(),
-						card: Math.ceil(Math.random() * 4),
-						dealer: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
-						game: { connect: { id: games[Math.floor(Math.random() * games.length)].id } },
-						auction: { connect: { id: auctions[Math.floor(Math.random() * auctions.length)].id } },
+						card: faker.helpers.arrayElement(['HEART', 'TILE', 'CLOVER', 'PIKE']),
+						dealer: { connect: { id: users[Math.trunc(Math.random() * users.length)].id } },
+						game: { connect: { id: games[Math.trunc(Math.random() * games.length)].id } },
+						auction: {
+							connect: { id: auctions[Math.trunc(Math.random() * auctions.length - 1) + 1].id },
+						},
 					},
 				});
 			}),
@@ -98,11 +114,11 @@ const main = async () => {
 			.map((_, i) => {
 				return prisma.score.create({
 					data: {
-						value: Math.floor(Math.random() * 10) * 5,
-						user: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
-						round: { connect: { id: rounds[Math.floor(i / 5)].id } },
-						game: { connect: { id: games[Math.floor(Math.random() * games.length)].id } },
-						season: { connect: { id: seasons[Math.floor(Math.random() * seasons.length)].id } },
+						value: Math.trunc(Math.random() * 10) * 5,
+						user: { connect: { id: users[Math.trunc(Math.random() * users.length)].id } },
+						round: { connect: { id: rounds[Math.trunc(i / 5)].id } },
+						game: { connect: { id: games[Math.trunc(Math.random() * games.length)].id } },
+						season: { connect: { id: seasons[Math.trunc(Math.random() * seasons.length)].id } },
 					},
 				});
 			}),
@@ -129,9 +145,9 @@ const main = async () => {
 			.map(() => {
 				return prisma.medal.create({
 					data: {
-						seasonId: seasons[Math.floor(Math.random() * seasons.length)].id,
+						seasonId: seasons[Math.trunc(Math.random() * seasons.length)].id,
 						medal: faker.helpers.arrayElement(['GOLD', 'SILVER', 'BRONZE']),
-						user: { connect: { id: users[Math.floor(Math.random() * users.length)].id } },
+						user: { connect: { id: users[Math.trunc(Math.random() * users.length)].id } },
 					},
 				});
 			}),
