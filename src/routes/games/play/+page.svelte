@@ -12,7 +12,8 @@
 	let taker: string = '';
 	let conscript: string = '';
 	let score: number = 0;
-	let active = false;
+	let active: boolean = false;
+	let gameId: string = game?.id ?? '';
 </script>
 
 <div class="flex flex-col items-center">
@@ -45,17 +46,17 @@
 				</tbody>
 			</table>
 			{#if user?.role === 'ADMIN'}
-				<div class="flex gap-2 mt-2">
-					{#if editMode}
-						{#each Array(5) as _, index}
-							<input
-								type="number"
-								name={index.toString()}
-								class="w-full px-2 py-1 rounded-lg bg-slate-950"
-							/>
-						{/each}
-					{:else}
-						<form method="POST">
+				<form method="POST">
+					<div class="flex gap-2 mt-2">
+						{#if editMode}
+							{#each Array(5) as _, index}
+								<input
+									type="number"
+									name={index.toString()}
+									class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								/>
+							{/each}
+						{:else}
 							<select
 								name="taker"
 								class="w-full px-2 py-1 rounded-lg bg-slate-950"
@@ -82,22 +83,25 @@
 									{/if}
 								{/each}
 							</select>
+							<!-- delete null and value: +6 lines -->
 							<input
 								type="number"
 								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								name="score"
 								placeholder={taker !== '' ? 'Score du preneur' : ''}
-								disabled={taker === ''}
+								disabled={taker === '' && null}
+								value={100}
 								on:change={(e) => (score = parseInt(e.currentTarget.value))}
 							/>
-						</form>
-					{/if}
-					<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
-					<button
-						class="flex items-center justify-center w-8 px-2 py-1 bg-red-700 rounded-lg hover:bg-red-600"
-					>
-						<Icon icon="mi-chevron-double-right" />
-					</button>
-				</div>
+						{/if}
+						<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
+						<button
+							class="flex items-center justify-center w-8 px-2 py-1 bg-red-700 rounded-lg hover:bg-red-600"
+						>
+							<Icon icon="mi-chevron-double-right" />
+						</button>
+					</div>
+				</form>
 			{/if}
 		</div>
 	</section>
