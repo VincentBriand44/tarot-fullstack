@@ -18,6 +18,7 @@
 	let conscript = '';
 	let score = 0;
 	let active = false;
+	let dealerId = users[0].id;
 	// let gameId: string = game?.id ?? '';
 	let inputs: Input[] = [];
 
@@ -84,17 +85,19 @@
 			</table>
 			{#if user?.role === 'ADMIN'}
 				<form method="POST">
+					<input type="hidden" name="gameId" value={game?.id} />
+					<input type="hidden" name="dealerId" value={dealerId} />
 					<div class="flex gap-2 mt-2">
 						{#if editMode}
 							{#each inputs as { id, value }}
 								<input
 									type="number"
 									{value}
-									name={id}
+									name="playerScore"
 									class="w-full px-2 py-1 rounded-lg bg-slate-950"
 								/>
+								<input type="hidden" name="playerId" value={id} />
 							{/each}
-							<input type="hidden" name="gameId" value={game?.id} />
 							<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
 						{:else}
 							<select

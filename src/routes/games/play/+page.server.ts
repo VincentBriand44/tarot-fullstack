@@ -53,41 +53,47 @@ export const actions = {
 		const data = await request.formData();
 		console.log('🚀 ~ file: +page.server.ts:47 ~ default: ~ data:', data);
 
-		const taker = data.get('gameId') ?? '';
-		console.log('🚀 ~ file: +page.server.ts:49 ~ default: ~ taker:', taker);
+		const gameId = data.get('gameId')?.toString() ?? '';
+		const auction = data.get('auction')?.toString() ?? '';
+		const dealerId = data.get('dealerId')?.toString() ?? '';
+		const playerId = data.getAll('playerId') ?? '';
+		const playerScore = data.getAll('playerScore') ?? '';
+		const players = playerId.map((id, index) => ({
+			id: id.toString(),
+			value: Number(playerScore[index]),
+		}));
+		const seasonId = data.get('seasonId')?.toString() ?? '';
 
-		// prisma.round.create({
-		// 	data: {
-		// 		auction: {
-		// 			connect: {
-		// 				id: auction?.id,
-		// 			},
-		// 		},
-		// 		game: {
-		// 			connect: {
-		// 				id: game.id,
-		// 			},
-		// 		},
-		// 		dealer: {
-		// 			connect: {
-		// 				id: game.rounds[0].dealerId,
-		// 			},
-		// 		},
-		// 		scores: {
-		// 			createMany: {
-		// 				data: game?.users.map((user) => ({
-		// 					userId: user.id,
-		// 					gameId: game?.id,
-		// 					seasonId: game?.seasonId,
-		// 					value: 0,
-		// 				})),
-		// 			},
-		// 		},
-		// 	},
-		// });
+		//TODO: error sending
 
-		// const gameId =
-
-		// await prisma.round.create({});
+		await prisma.round.create({
+			data: {
+				auction: {
+					connect: {
+						id: auction,
+					},
+				},
+				game: {
+					connect: {
+						id: gameId,
+					},
+				},
+				dealer: {
+					connect: {
+						id: dealerId,
+					},
+				},
+				scores: {
+					createMany: {
+						data: players.map(({ id, value }) => ({
+							userId: id,
+							gameId: gameId,
+							seasonId: seasonId,
+							value: value,
+						})),
+					},
+				},
+			},
+		});
 	},
 };
