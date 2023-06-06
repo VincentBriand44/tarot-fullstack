@@ -1,6 +1,7 @@
 <script lang="ts">
-	import Calendar from '$components/Calendar.svelte';
 	import type { Day, Item } from '$types/app';
+
+	import Calendar from '$components/Calendar.svelte';
 
 	var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	let monthNames = [
@@ -26,9 +27,9 @@
 
 	var days: Day[] = []; //	The days to display in each box
 
-	function randInt(max: number) {
-		return Math.floor(Math.random() * max) + 1;
-	}
+	// function randInt(max: number) {
+	// 	return Math.floor(Math.random() * max) + 1;
+	// }
 
 	//	The Calendar Component just displays stuff in a row & column. It has no knowledge of dates.
 	//	The items[] below are placed (by you) in a specified row & column of the calendar.
@@ -39,7 +40,7 @@
 	function initMonthItems() {
 		let y = year;
 		let m = month;
-		let d1 = new Date(y, m, randInt(7) + 7);
+		// let d1 = new Date(y, m, randInt(7) + 7);
 		items = [
 			{
 				title: 'Chez',

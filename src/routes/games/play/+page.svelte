@@ -1,21 +1,55 @@
 <script lang="ts">
 	import Confirm from '$components/Confirm.svelte';
 
+	interface Input {
+		id: string;
+		value: number;
+	}
+
 	export let data;
-	const { game, user } = data;
+	const { game, user, auctions } = data;
 	const users = game?.users || [];
 	const rounds = game?.rounds || [];
 
 	let editMode = false;
 
-	let taker: string = '';
-	let conscript: string = '';
-	let score: number = 0;
-	let active: boolean = false;
-	let gameId: string = game?.id ?? '';
+	let taker = '';
+	let auction = '';
+	let conscript = '';
+	let score = 0;
+	let active = false;
+	// let gameId: string = game?.id ?? '';
+	let inputs: Input[] = [];
 
 	const handleClick = () => {
 		editMode = !editMode;
+
+		inputs = [];
+		for (let i = 0; i < 5; i++) {
+			const user = users[i].id;
+			let value = 0;
+
+			if (taker !== '') {
+				if (user === taker) {
+					value = score;
+				} else if (conscript !== '') {
+					if (user === conscript) {
+						value = score / 2;
+					} else {
+						value = -(score / 2);
+					}
+				} else {
+					value = -(score / 4);
+				}
+			} else {
+				value = 0;
+			}
+			inputs.push({
+				id: user,
+				value: value,
+			});
+			console.log('🚀 ~ file: +page.svelte:27 ~ handleClick ~ inputs:', inputs);
+		}
 	};
 </script>
 
@@ -52,9 +86,15 @@
 				<form method="POST">
 					<div class="flex gap-2 mt-2">
 						{#if editMode}
-							{#each users as { id }}
-								<input type="number" name={id} class="w-full px-2 py-1 rounded-lg bg-slate-950" />
+							{#each inputs as { id, value }}
+								<input
+									type="number"
+									{value}
+									name={id}
+									class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								/>
 							{/each}
+							<input type="hidden" name="gameId" value={game?.id} />
 							<button class="px-2 py-1 rounded-lg w-96 bg-slate-950">Envoyer</button>
 						{:else}
 							<select
@@ -69,6 +109,21 @@
 								{/each}
 							</select>
 							<select
+								name="auction"
+								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+								disabled={taker === ''}
+								on:change={(e) => (auction = e.currentTarget.value)}
+							>
+								<option value="">Choisir la mise</option>
+								{#each auctions as { id, name }}
+									{#if name !== 'skip'}
+										<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">
+											{name}
+										</option>
+									{/if}
+								{/each}
+							</select>
+							<select
 								name="conscript"
 								class="w-full px-2 py-1 rounded-lg bg-slate-950"
 								disabled={taker === ''}
@@ -77,9 +132,9 @@
 								<option value="">Choisir l'appelé</option>
 								{#each users as { name, id }}
 									{#if id !== taker}
-										<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950"
-											>{name}</option
-										>
+										<option value={id} class="w-full px-2 py-1 rounded-lg bg-slate-950">
+											{name}
+										</option>
 									{/if}
 								{/each}
 							</select>
@@ -91,14 +146,22 @@
 								disabled={taker === ''}
 								on:change={(e) => (score = parseInt(e.currentTarget.value))}
 							/>
+
+							<!-- <input
+								type="checkbox"
+								{value}
+								name={id}
+								class="w-full px-2 py-1 rounded-lg bg-slate-950"
+							/> -->
 						{/if}
 						<button
 							class="px-2 py-1 rounded-lg w-96 bg-slate-950"
 							on:click|preventDefault={handleClick}
+							style={editMode ? 'display: none' : 'display: block'}
 						>
 							Valider
 						</button>
-						<!-- <button
+						<!-- mal donne <button
 							class="flex items-center justify-center w-8 px-2 py-1 bg-red-700 rounded-lg hover:bg-red-600"
 						>
 							<Icon icon="mi-chevron-double-right" />

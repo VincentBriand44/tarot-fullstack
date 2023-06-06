@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Nav } from '$types/app';
-
 	import Icon from './Icon.svelte';
+
+	import type { Nav } from '$types/app';
 
 	export let nav: Nav[];
 </script>

@@ -65,19 +65,18 @@ model Round {
   game   Game   @relation(fields: [gameId], references: [id])
   gameId String
 
-  auction   Auction @relation(fields: [auctionId], references: [id])
-  auctionId String
-
-  scores Score[]
+  auction Auction[]
+  scores  Score[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Auction {
-  id    String @id @default(cuid())
+  id    String      @id @default(cuid())
   name  String
   value Int
+  type  AuctionType @default(UNIQUE)
 
   Round Round[]
 }
@@ -123,14 +122,20 @@ enum MedalType {
   BRONZE
 }
 
+enum AuctionType {
+  HIDDEN
+  UNIQUE
+  OPTIONAL
+}
+
 enum Role {
   ADMIN
   USER
 }
 
 enum Card {
-  HEART
-  TILE
-  CLOVER
   PIKE
+  HEART
+  CLOVER
+  TILE
 }

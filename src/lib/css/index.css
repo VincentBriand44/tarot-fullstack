@@ -3,41 +3,41 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply bg-slate-800 text-slate-200;
-  }
+	html {
+		@apply bg-slate-800 text-slate-200;
+	}
 
-  .overflow-y-scroll::-webkit-scrollbar {
-    @apply w-2 rounded-xl bg-slate-950;
-  }
+	.overflow-y-scroll::-webkit-scrollbar {
+		@apply w-2 rounded-xl bg-slate-950;
+	}
 
-  .overflow-y-scroll::-webkit-scrollbar-thumb {
-    @apply bg-slate-700 rounded-xl;
-  }
+	.overflow-y-scroll::-webkit-scrollbar-thumb {
+		@apply bg-slate-700 rounded-xl;
+	}
 
-  .overflow-y-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.slate.700') theme('colors.slate.950');
-  }
+	.overflow-y-scroll {
+		scrollbar-width: thin;
+		scrollbar-color: theme('colors.slate.700') theme('colors.slate.950');
+	}
 }
 
 @layer components {
-  .fullpage {
-    @apply flex flex-col items-center justify-center;
-    min-height: calc(100vh - 4rem);
-  }
+	.fullpage {
+		@apply flex flex-col items-center justify-center;
+		min-height: calc(100vh - 4rem);
+	}
 
-  .module {
-    height: calc(100vh - 12rem);
-    min-height: 10rem;
-  }
+	.module {
+		height: calc(100vh - 12rem);
+		min-height: 10rem;
+	}
 
-  .module>.content {
-    @apply h-full pr-2 mb-8 overflow-y-scroll;
-  }
+	.module > .content {
+		@apply h-full pr-2 mb-8 overflow-y-scroll;
+	}
 
-  .module::-webkit-scrollbar,
-  .module::-webkit-scrollbar-thumb {
-    @apply rounded-none rounded-tr-xl rounded-br-xl;
-  }
+	.module::-webkit-scrollbar,
+	.module::-webkit-scrollbar-thumb {
+		@apply rounded-none rounded-tr-xl rounded-br-xl;
+	}
 }

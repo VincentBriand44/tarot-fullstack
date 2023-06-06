@@ -1,6 +1,7 @@
 <script lang="ts">
-	import type { Day, Item } from '$types/app';
 	import { createEventDispatcher } from 'svelte';
+
+	import type { Day, Item } from '$types/app';
 
 	export var headers: [] = [];
 	export let days: Day[] = [];

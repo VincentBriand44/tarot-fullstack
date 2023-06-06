@@ -66,26 +66,44 @@ const main = async () => {
 	const auctions = await Promise.all([
 		await prisma.auction.create({
 			data: {
-				name: 'skip',
+				name: 'Skip',
 				value: 0,
+				type: 'HIDDEN',
 			},
 		}),
 		await prisma.auction.create({
 			data: {
-				name: 'garde',
+				name: 'Garde',
 				value: 0,
+				type: 'UNIQUE',
 			},
 		}),
 		await prisma.auction.create({
 			data: {
-				name: 'garde sans',
+				name: 'Garde sans',
 				value: 10,
+				type: 'UNIQUE',
 			},
 		}),
 		await prisma.auction.create({
 			data: {
-				name: 'garde contre',
+				name: 'Garde contre',
 				value: 20,
+				type: 'UNIQUE',
+			},
+		}),
+		await prisma.auction.create({
+			data: {
+				name: 'Petit',
+				value: 10,
+				type: 'OPTIONAL',
+			},
+		}),
+		await prisma.auction.create({
+			data: {
+				name: 'Poignée',
+				value: 20,
+				type: 'OPTIONAL',
 			},
 		}),
 	]);

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Nav } from '$types/app';
-
 	import Icon from './Icon.svelte';
+
+	import type { Nav } from '$types/app';
 
 	export let accountDropdown: Nav[];
 
-	let showDropdown: boolean = false;
+	let showDropdown = false;
 
 	const toggleDropdown = () => {
 		showDropdown = !showDropdown;
